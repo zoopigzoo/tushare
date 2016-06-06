@@ -15,14 +15,18 @@ class TestTrading(unittest.TestCase):
     def test_marketstat(self):
         df = td.get_market_stat()
         print(df)
-        
-    def test_tickData(self):
-        self.set_data()
-        td.get_tick_data(self.code, date=self.start)
     
-#     def test_histData(self):
-#         self.set_data()
-#         td.get_hist_data(self.code, start=self.start, end=self.end)
+    def test_hgt(self):
+        df = td.get_hgt_money()
+        print(df)   
+    
+#   def test_tickData(self):
+#       self.set_data()
+#       td.get_tick_data(self.code, date=self.start)
+    
+#   def test_histData(self):
+#       self.set_data()
+#       td.get_hist_data(self.code, start=self.start, end=self.end)
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

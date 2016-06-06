@@ -6,6 +6,7 @@ Fork Notes
 Add new functions for stock trading
 
 1. get_market_stat: 获取当前市场上涨，下跌，持平个股数量
+2. get_hgt_money: 获取当前市场沪股通资金流向（数据来源：东方财富）
 
 ----
 

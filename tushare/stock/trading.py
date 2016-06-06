@@ -645,6 +645,51 @@ def get_market_stat():
             df = pd.DataFrame(allnums, columns=cols)
             return df
     raise IOError(ct.NETWORK_URL_ERROR_MSG)    
+   
+def get_hgt_money():
+    """
+    获取当前沪港通分时数据
+    return
+    -------
+      DataFrame
+          time:时间，格式为hh:mm
+          hgt:沪股通资金流向，单位亿元
+          ggt:港股通资金流向，单位亿元
+    """
+    url = ct.HGT_MONEY_URL%(_random())
+
+    try:
+        request = Request(url)
+        lines = urlopen(request, timeout = 10).read()
+        if len(lines) < 15: #no data
+            return None
+    except Exception as e:
+        print(e)
+    else:
+        cols = ['time' ,'hgt', 'ggt']
+
+        lines = lines.decode('UTF-8')[1:]
+        text = [];
+        for line in lines.split('\r\n'):
+            ll = line.split(';')
+
+            tm = ll[0].strip()
+
+            g = 0.0
+            if len(ll[1]) > 0:
+                g = float(ll[1])
+
+            h = 0.0
+            if len(ll[2]) > 0:
+                h = float(ll[2])
+
+            item = {'time': tm, 'hgt': g, 'ggt': h}
+            text.append(item)
+        
+        df = pd.DataFrame(text, columns = cols)
+        return df
+
+    raise IOError(ct.NETWORK_URL_ERROR_MSG)   
     
 def _random(n=13):
     from random import randint
