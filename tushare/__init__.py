@@ -9,7 +9,8 @@ from tushare.stock.trading import (get_hist_data, get_tick_data,
                                    get_h_data, get_today_ticks,
                                    get_index, get_hists,
                                    get_sina_dd, get_market_stat,
-                                   get_hgt_money)
+                                   get_hgt_money,
+                                   get_thsgn_block, get_thshy_block, get_zjhhy_block)
 
 """
 for trading data

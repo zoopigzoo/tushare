@@ -18,7 +18,11 @@ class TestTrading(unittest.TestCase):
     
     def test_hgt(self):
         df = td.get_hgt_money()
-        print(df)   
+        print(df)  
+        
+    def test_block(self):
+        df = td.get_zjhhy_block()
+        print(df)
     
 #   def test_tickData(self):
 #       self.set_data()

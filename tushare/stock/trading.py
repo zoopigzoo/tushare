@@ -295,6 +295,8 @@ def get_today_all():
         for i in range(2, ct.PAGE_NUM[0]):
             newdf = _parsing_dayprice_json(i)
             df = df.append(newdf, ignore_index=True)
+            ct._write_head()
+            
     return df
 
 
@@ -690,6 +692,90 @@ def get_hgt_money():
         return df
 
     raise IOError(ct.NETWORK_URL_ERROR_MSG)   
+ 
+def get_thsgn_block(ranking='desc'):
+    """
+    获取同花顺概念实时行情
+    return
+    -------
+      DataFrame
+            'platename': 板块名称（可能返回为空，需要根据同花顺定义解析）
+            'platecode': 板块code
+            'num': 股票个数
+            'jj': 平均价格
+            'zxj': 最新价
+            'cjl': 成交量
+            'cje': 成交额
+            'zde': 涨跌幅
+            'type': 类型(1同花顺行业，2？，3概念，4证监会行业)
+            'hycode': 拼音代码
+            'py': 拼音
+            'gainername': 领涨股票名称（可能为空） 
+            'gainercode': 领涨股票code
+            'ledname': 领跌股票名称（可能为空）
+            'ledcode': 领跌股票code
+            'gainerzdf': 领涨股票涨跌幅
+            'gainerzxj': 领涨股票最新价
+            'ledzdf': 领跌股票涨跌幅
+            'ledzxj': 领跌股票最新价
+            'jlr': 净流入
+            'rtime': 时间
+    """
+    return get_ths_stockrank(ct.THS_GN_ID, ct.THS_GN_MAXPAGE, ranking)
+
+def get_thshy_block(ranking='desc'):
+    """
+    获取同花顺行业实时行情
+    -------
+      DataFrame
+        同概念指数
+    """
+    return get_ths_stockrank(ct.THS_THSHY_ID, ct.THS_THSHY_MAXPAGE, ranking)
+
+def get_zjhhy_block(ranking='desc'):
+    """
+    获取证监会行业实时行情
+    -------
+      DataFrame
+        同概念指数
+    """
+    return get_ths_stockrank(ct.THS_ZJHHY_ID, ct.THS_ZJHHY_MAXPAGE, ranking)
+
+def get_ths_stockrank(category, totalpage, ranking='desc'):
+    ct._write_head()
+    df = _get_ths_stockrank_page(category, ranking, 1)
+
+    if df is not None:
+        for i in range(2, totalpage):
+            newdf = _get_ths_stockrank_page(category, ranking, i)
+            df = df.append(newdf, ignore_index=True)
+            ct._write_console()
+        
+    return df
+
+def _get_ths_stockrank_page(category, ranking='desc', pageNum=1, pause=1.0):
+    url = ct.THS_BLOCK_URL%(category, ranking, pageNum)
+
+    retry_count = 3
+    for _ in range(retry_count):
+        time.sleep(pause)
+        try:
+            request = Request(url)
+            lines = urlopen(request, timeout = 10).read()
+            if len(lines) < 15: #no data
+                return None
+        except Exception as e:
+            print(e)
+        else:
+            cols = ['platename', 'platecode', 'num', 'jj', 'zxj', 'cjl', 'cje', 'zde', 'type', 'hycode', 'py', 'gainername', 'gainercode', 'ledname' ,'ledcode', 'gainerzdf', 'gainerzxj' , 'ledzdf', 'ledzxj', 'jlr', 'rtime']
+
+            lines = lines.decode('GBK') 
+            text = json.loads(lines)
+            df = pd.DataFrame(text['data'], columns = cols)
+            return df
+            
+    raise IOError(ct.NETWORK_URL_ERROR_MSG)
+ 
     
 def _random(n=13):
     from random import randint

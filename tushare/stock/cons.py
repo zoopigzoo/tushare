@@ -128,6 +128,14 @@ TOKEN_ERR_MSG = '请设置通联数据接口的token凭证码'
 BOX_INPUT_ERR_MSG = '请输入YYYY-MM格式的年月数据'
 MARKET_STAT_URL = '%shq.%s/rn=%s&list=sh000002_zdp,sz399107_zdp,sh000003_zdp,sz399108_zdp,sz399102_zdp'
 HGT_MONEY_URL = 'http://data.eastmoney.com/bkzj/graph/hgt_1.html?rt=0.%s'
+THS_BLOCK_URL = 'http://q.10jqka.com.cn/interface/stock/%s/zdf/%s/%d/quote/quote'
+THS_GN_ID = 'gn'
+THS_GN_MAXPAGE = 5
+THS_THSHY_ID = 'thshy'
+THS_THSHY_MAXPAGE = 3
+THS_ZJHHY_ID = 'zjhhy'
+THS_ZJHHY_MAXPAGE = 2
+
 
 import sys
 PY3 = (sys.version_info[0] >= 3)

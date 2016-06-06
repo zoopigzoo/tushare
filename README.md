@@ -7,6 +7,7 @@ Add new functions for stock trading
 
 1. get_market_stat: 获取当前市场上涨，下跌，持平个股数量
 2. get_hgt_money: 获取当前市场沪股通资金流向（数据来源：东方财富）
+3. get_ths*_block: 获取板块概念涨跌数据 get_thsgn_block, get_thshy_block, get_zjhhy_block（数据来源：同花顺）
 
 ----
 
