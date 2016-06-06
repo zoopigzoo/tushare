@@ -1,5 +1,14 @@
 TuShare
 ----
+
+Fork Notes
+
+Add new functions for stock trading
+
+1. get_market_stat: 获取当前市场上涨，下跌，持平个股数量
+
+----
+
 ![](https://api.travis-ci.org/waditu/tushare.png?branch=master)
 [![](https://pypip.in/v/tushare/badge.png)](https://pypi.python.org/pypi/tushare/0.1.5)
 

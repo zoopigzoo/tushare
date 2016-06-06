@@ -608,7 +608,43 @@ def get_hists(symbols, start=None, end=None,
         return df
     else:
         return None
+
+def get_market_stat():
+    """
+    获取大盘个股涨跌个数
+    return
+    -------
+      DataFrame
+          code:指数名称
+          rise:上涨家数
+          eq:持平个数
+          fall:下跌个数
+    """
+    url = ct.MARKET_STAT_URL%(ct.P_TYPE['http'], ct.DOMAINS['sinahq'],_random())
     
+    retry_count = 3
+    pause = 1
+    for _ in range(retry_count):
+        time.sleep(pause)
+        try:
+            request = Request(url)
+            lines = urlopen(request, timeout = 10).read()
+            if len(lines) < 15: #no data
+                return None
+        except Exception as e:
+            print(e)
+        else:
+            cols = ['code', 'rise', 'fall', 'eq']
+
+            allnums = []
+            for line in lines.splitlines():
+                key = line.split(' ')[1].split('=')[0].split('_')[2][2:]
+                nums = line.split('"')[1].split(',')
+                nums.insert(0, key)
+                allnums.append(nums)
+            df = pd.DataFrame(allnums, columns=cols)
+            return df
+    raise IOError(ct.NETWORK_URL_ERROR_MSG)    
     
 def _random(n=13):
     from random import randint

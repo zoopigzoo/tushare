@@ -126,6 +126,7 @@ LHB_MSG = '周期输入有误，请输入数字5、10、30或60'
 TOKEN_F_P = 'tk.csv'
 TOKEN_ERR_MSG = '请设置通联数据接口的token凭证码'
 BOX_INPUT_ERR_MSG = '请输入YYYY-MM格式的年月数据'
+MARKET_STAT_URL = '%shq.%s/rn=%s&list=sh000002_zdp,sz399107_zdp,sh000003_zdp,sz399108_zdp,sz399102_zdp'
 
 import sys
 PY3 = (sys.version_info[0] >= 3)

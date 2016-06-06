@@ -12,6 +12,10 @@ class TestTrading(unittest.TestCase):
         self.start = '2014-11-03'
         self.end = '2014-11-07'
     
+    def test_marketstat(self):
+        df = td.get_market_stat()
+        print(df)
+        
     def test_tickData(self):
         self.set_data()
         td.get_tick_data(self.code, date=self.start)
